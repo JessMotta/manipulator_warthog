@@ -7,3 +7,8 @@ Common tasks to all groups shall be shared in this repo.
 - Communication, mechanical and electric integration of manipulator and warthog
 - Moveit packages (moveit_config, move_group_interface)
 See: https://github.com/warthog-cpr/warthog_manipulation
+
+
+## To do
+
+- Add jerotimon/elborgson description packages
