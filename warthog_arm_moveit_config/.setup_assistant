@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: warthog_arm
+    relative_path: urdf/main.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/example.srdf
+  CONFIG:
+    author_name: boitata
+    author_email: boitata@boitata.com
+    generated_timestamp: 1605034271

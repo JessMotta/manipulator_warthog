@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- RViz -->
+  <arg name="rviz" default="false"/>
+
+  <arg name="verbose"             default="true"/>
+  <arg name="paused"              default="false"/>
+  <arg name="use_sim_time"        default="true"/>
+  <arg name="gui"                 default="true"/>
+  <arg name="headless"            default="false"/>
+  <arg name="debug"               default="false"/>
+  
+  <!-- CHANGE CIMATEC WORLD -->
+  <arg name="cimatec_world_light" default="true"/>
+  
+  <env if="$(arg cimatec_world_light)" name="GAZEBO_MODEL_PATH" value="${GAZEBO_MODEL_PATH}:$(find warthog_bomb_mission)/model"/>
+  <env if="$(arg cimatec_world_light)" name="GAZEBO_RESOURCE_PATH" value="${GAZEBO_RESOURCE_PATH}:$(find warthog_bomb_mission)/model"/>
+
+  <env unless="$(arg cimatec_world_light)" name="GAZEBO_MODEL_PATH" value="${GAZEBO_MODEL_PATH}:$(find bir_cimatec4_map)/model"/>
+  <env unless="$(arg cimatec_world_light)" name="GAZEBO_RESOURCE_PATH" value="${GAZEBO_RESOURCE_PATH}:$(find bir_cimatec4_map)/model"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg if    ="$(arg cimatec_world_light)" name="world_name"    value="$(find warthog_bomb_mission)/world/cimatec.world"/>
+    <arg unless="$(arg cimatec_world_light)" name="world_name"    value="$(find bir_cimatec4_map)/world/cimatec.world"/>
+    <arg name="debug"         value="$(arg debug)" />
+    <arg name="gui"           value="$(arg gui)" />
+    <arg name="paused"        value="$(arg paused)"/>
+    <arg name="use_sim_time"  value="$(arg use_sim_time)"/>
+    <arg name="headless"      value="$(arg headless)"/>
+    <arg name="verbose"       value="$(arg verbose)"/>
+  </include>
+  
+  <!-- Spawn devices -->
+  <arg name="velodyne"  default="false" />
+  <arg name="hokuyo"    default="true" />
+  <arg name="quanergy"  default="false" />
+  <arg name="basler"    default="false" />
+  <arg name="teledyne"  default="true" />
+  <arg name="pixelink"  default="true" />
+  <arg name="mynteye"   default="false" />
+  <arg name="zed"       default="false" />
+  <arg name="gps"       default="true" />
+  <arg name="arm"       default="true" />
+
+  <include file="$(find warthog_arm)/launch/spawn.launch">
+    <arg name="velodyne"  value="$(arg velodyne)" />
+    <arg name="hokuyo"    value="$(arg hokuyo)" />
+    <arg name="quanergy"  value="$(arg quanergy)" />
+    <arg name="basler"    value="$(arg basler)" />
+    <arg name="teledyne"  value="$(arg teledyne)" />
+    <arg name="pixelink"  value="$(arg pixelink)" />
+    <arg name="mynteye"   value="$(arg mynteye)" />
+    <arg name="zed"       value="$(arg zed)" />
+    <arg name="gps"       value="$(arg gps)" />
+    <arg name="arm"       value="$(arg arm)" />
+  </include>
+
+  <!-- Velodyne Node Simulation -->
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
+    <remap from="cloud_in" to="/velodyne_points"/>
+    <rosparam>
+        target_frame: velodyne # Leave disabled to output scan in pointcloud frame
+        transform_tolerance: 0.01
+        min_height: -0.45
+        <!-- max_height: 2.0 -->
+        <!-- angle_min: -M_PI -->
+        <!-- angle_max: M_PI -->
+        <!-- angle_increment: 0.0087 # M_PI/360.0 -->
+        <!-- scan_time: 0.3333 -->
+        <!-- range_min: 0.45 -->
+        <!-- range_max: 130.0 -->
+        <!-- use_inf: true -->
+        <!-- inf_epsilon: 1.0 -->
+        # Concurrency level, affects number of pointclouds queued for processing and number of threads used
+        # 0 : Detect number of cores
+        # 1 : Single threaded
+        # 2->inf : Parallelism level
+        concurrency_level: 0
+    </rosparam>
+  </node>
+
+  <!-- RViz -->
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(anon rviz)" respawn="false" output="screen" args="-d $(find warthog_bomb_mission)/rviz/config.rviz" />
+</launch>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Spawn Devices -->
+  <arg name="velodyne" default="true" />
+  <arg name="hokuyo" default="true" />
+  <arg name="quanergy" default="true" />
+  <arg name="basler" default="true" />
+  <arg name="teledyne" default="true" />
+  <arg name="pixelink" default="true" />
+  <arg name="mynteye" default="true" />
+  <arg name="zed" default="true" />
+  <arg name="gps" default="true" />
+  <arg name="arm" default="true" />
+
+
+  <!-- Configuration of Warthog which you would like to simulate.
+       See warthog_description for details. -->
+  <arg name="config" default="base" />
+  <arg name="x" default="0" />
+  <arg name="y" default="0" />
+  <arg name="z" default="0.3" />
+  <arg name="yaw" default="0" />
+
+  <!-- Load Warthog's and sensores description, controllers, and teleop nodes. -->
+  <param name="robot_description"
+         command="$(find warthog_description)/scripts/env_run
+                  $(find warthog_description)/urdf/configs/$(arg config)
+                  $(find xacro)/xacro $(find warthog_arm)/urdf/main.urdf.xacro
+                 velodyne:=$(arg velodyne)
+                 hokuyo:=$(arg hokuyo)
+                 quanergy:=$(arg quanergy)
+                 basler:=$(arg basler)
+                 teledyne:=$(arg teledyne)
+                 pixelink:=$(arg pixelink)
+                 mynteye:=$(arg mynteye)
+                 zed:=$(arg zed)
+                 gps:=$(arg gps)
+                 arm:=$(arg arm)
+                  --inorder" />
+  <!-- <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" args="-urdf -param /robot_description -model main"/> -->
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+
+  <!-- joint_state_publisher is needed to pushish the suspension joints. -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <include file="$(find warthog_arm)/launch/control.launch" />
+  <include file="$(find warthog_control)/launch/teleop.launch" />
+
+  <!-- Spawn Warthog -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+	      args="-urdf -model warthog -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -R 0 -P 0 -Y $(arg yaw)" />      
+
+</launch>

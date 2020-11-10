@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="example">
+  <xacro:arg name="velodyne" default="true"/>
+  <xacro:property name="velodyne" value="$(arg velodyne)" />
+
+  <xacro:arg name="hokuyo" default="true"/>
+  <xacro:property name="hokuyo" value="$(arg hokuyo)" />
+
+  <xacro:arg name="quanergy" default="true"/>
+  <xacro:property name="quanergy" value="$(arg quanergy)" />
+
+  <xacro:arg name="basler" default="true"/>
+  <xacro:property name="basler" value="$(arg basler)" />
+
+  <xacro:arg name="teledyne" default="true"/>
+  <xacro:property name="teledyne" value="$(arg teledyne)" />
+
+  <xacro:arg name="pixelink" default="true"/>
+  <xacro:property name="pixelink" value="$(arg pixelink)" />
+
+  <xacro:arg name="mynteye" default="true"/>
+  <xacro:property name="mynteye" value="$(arg mynteye)" />
+
+  <xacro:arg name="zed" default="true"/>
+  <xacro:property name="zed" value="$(arg zed)" />
+
+  <xacro:arg name="gps" default="true"/>
+  <xacro:property name="gps" value="$(arg gps)" />
+
+  <xacro:arg name="gpu" default="false"/>
+  <xacro:property name="gpu" value="$(arg gpu)" />
+
+  <xacro:arg name="arm" default="false"/>
+  <xacro:property name="arm" value="$(arg arm)" />
+
+  <!-- WARTHOG -->
+  <xacro:include filename="$(find warthog_description)/urdf/warthog.urdf.xacro"/>
+  <!-- ##### -->
+
+  <!-- LIDAR -->
+    <!-- VLP-16 -->
+    <xacro:if value="${velodyne}">
+      <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+      <xacro:VLP-16 parent="suport" name="velodyne" topic="/velodyne_points" hz="10" samples="100" gpu="${gpu}">
+        <origin xyz="-0.15 0.0 0.618" rpy="0 0 0" />
+      </xacro:VLP-16>
+    </xacro:if>
+    <!-- ##### -->
+
+    <!-- QUANERGY -->
+    <xacro:if value="${quanergy}">
+      <xacro:include filename="$(find warthog_bomb_mission)/urdf/lidar/quanergy.xacro"/>
+      <joint name="quanergy_joint_warthog" type="fixed">
+        <origin xyz="-0.15 0.0 0.461" rpy="0.0 0.0 -1.57"/>
+        <parent link="suport"/>
+        <child link="quanergy"/>
+      </joint>
+    </xacro:if>
+    <!-- ##### -->
+    
+    <!-- HOKUYO -->
+    <!-- <xacro:include filename="$(find hector_sensors_description)/urdf/hokuyo_utm30lx.urdf.xacro"/>
+    <hokuyo_utm30lx_model name="hokuyo_laser" parent="dynamixel">
+      <origin xyz="0.0 0.0 0.1" rpy="0 0 0" />
+    </hokuyo_utm30lx_model> -->
+    <xacro:if value="${hokuyo}">
+      <xacro:include filename="$(find warthog_bomb_mission)/urdf/lidar/hokuyo.xacro"/>
+      <joint name="hokuyo_joint_warthog" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="dynamixel"/>
+        <child link="hokuyo"/>
+      </joint>
+
+      <xacro:include filename="$(find warthog_bomb_mission)/urdf/suport/hokuyo_sup.xacro"/>
+      <joint name="hokuyo_sup_joint_warthog" type="fixed">
+        <origin xyz="-0.06 0.0 0.22" rpy="1.57 0.0 0.0"/>
+        <parent link="suport"/>
+        <child link="dynamixel"/>
+      </joint>
+    </xacro:if>
+    <!-- ##### -->
+  <!-- ##### -->
+  
+  <!-- SUPORTS -->
+  <xacro:include filename="$(find warthog_bomb_mission)/urdf/suport/suport.xacro"/>
+  <joint name="suport_joint_warthog" type="fixed">
+    <origin xyz="-0.125 0.0 0.59" rpy="0.0 0.0 0.0"/>
+    <parent link="chassis_link"/>
+    <child link="suport"/>
+  </joint>
+
+  <xacro:include filename="$(find warthog_bomb_mission)/urdf/suport/suport_stereo.xacro"/>
+  <joint name="suport_stereo_joint_warthog" type="fixed">
+    <origin xyz="-0.015 0.0 0.745" rpy="1.5707 0.0 -1.5707"/>
+    <parent link="chassis_link"/>
+    <child link="suport_stereo"/>
+  </joint>
+
+  <!-- <xacro:include filename="$(find warthog_bomb_mission)/urdf/suport/suport_gps.xacro"/>
+  <joint name="suport_gps_joint_warthog" type="fixed">
+    <origin xyz="-0.3 0.0 0.282" rpy="0.0 0.0 -1.57"/>
+    <parent link="chassis_link"/>
+    <child link="suport_gps"/>
+  </joint> -->
+  <!-- ##### -->
+
+  <!-- ####CAMERA#### -->
+    <!-- BASLER -->
+    <xacro:if value="${basler}">
+      <xacro:include filename="$(find warthog_bomb_mission)/urdf/camera/camera_basler.xacro"/>
+      <joint name="basler_joint_warthog" type="fixed">
+        <origin xyz="-0.088 0.337 0.671" rpy="0.0 0.0 1.57"/>
+        <parent link="suport"/>
+        <child link="camera_basler"/>
+      </joint>
+    </xacro:if>
+    <!-- ##### -->
+
+    <!-- TELEDYNE -->
+    <xacro:if value="${teledyne}">
+      <xacro:include filename="$(find warthog_arm)/urdf/camera/camera_teledyne.xacro"/>
+      <joint name="teledyne_joint_warthog" type="fixed">
+        <origin xyz="-0.088 -0.337 0.671" rpy="0.0 0.0 1.57"/>
+        <parent link="suport"/>
+        <child link="camera_teledyne"/>
+      </joint>
+    </xacro:if>
+    <!-- ##### -->
+
+    <!-- PIXELINK -->
+    <xacro:if value="${pixelink}">
+      <xacro:include filename="$(find warthog_bomb_mission)/urdf/camera/camera_pixelink.xacro"/>
+      <joint name="pixelink_joint_warthog" type="fixed">
+        <origin xyz="-0.170 0.0 0.23" rpy="0.0 0.0 -1.57"/>
+        <parent link="suport"/>
+        <child link="camera_pixelink"/>
+      </joint>
+    </xacro:if>
+    <!-- ##### -->
+
+    <!-- MYNTEYE -->
+    <xacro:if value="${mynteye}">
+      <xacro:include filename="$(find warthog_bomb_mission)/urdf/camera/camera_mynteye.xacro"/>
+      <joint name="mynteye_joint_warthog" type="fixed">
+        <origin xyz="0.015 0.006 0.017" rpy="1.5707 0.0 3.14"/>
+        <parent link="suport_stereo"/>
+        <child link="camera_mynteye"/>
+      </joint>
+    </xacro:if>
+    <!-- ##### -->
+
+    <!-- ZED -->
+    <xacro:if value="${zed}">
+      <xacro:include filename="$(find warthog_bomb_mission)/urdf/camera/camera_zed.xacro"/>
+      <joint name="zed_joint_warthog" type="fixed">
+        <origin xyz="0.05 0.0 0.249" rpy="0.0 0.0 1.57"/>
+        <parent link="suport"/>
+        <child link="camera_zed"/>
+      </joint>
+    </xacro:if>
+    <!-- ##### -->
+  <!-- ##### -->
+
+  <!-- GPS -->
+  <xacro:if value="${gps}">
+    <xacro:include filename="$(find warthog_description)/urdf/accessories/novatel_smart6.urdf.xacro" />
+    <xacro:novatel_smart6 prefix="navsat"/>
+    <joint name="navsat_joint" type="fixed">
+      <origin xyz="-0.060 -0.224 0.208" rpy="0 0 0" />
+      <parent link="suport" />
+      <child link="navsat_link" />
+    </joint>
+  </xacro:if>
+  <!-- ARM -->
+  <!-- <xacro:if value="${arm}"> -->
+    <xacro:include filename="$(find warthog_arm)/urdf/arm.xacro" />
+    <joint name="base_to_warthog" type="fixed">
+      <origin rpy="0 0 -1.571" xyz="0.619 0 0.333"/>
+      <parent link="base_link"/>
+      <child link="base_to_manipulator"/>
+    </joint>
+  <!-- </xacro:if> -->
+
+</robot>

@@ -5,18 +5,18 @@
       <visual>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/base.dae"/>
+          <mesh filename="package://warthog_arm/meshes/base.dae"/>
         </geometry>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/base.dae"/>
+          <mesh filename="package://warthog_arm/meshes/base.dae"/>
         </geometry>
       </collision>
       <inertial>
         <origin rpy="0 0 0" xyz="0 0 0"/>
-        <mass value="10000.86661792"/>
+        <mass value="1.8"/>
         <inertia ixx="8.72078676" ixy="-9.55785583e-7" ixz="0" iyx="-9.55785583e-7" iyy="4.66430350" iyz="0" izx="0" izy="-0" izz="5.35109282"/>
       </inertial>
     </link>
@@ -25,13 +25,13 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/id_1.dae"/>
+          <mesh filename="package://warthog_arm/meshes/id_1.dae"/>
         </geometry>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/id_1.dae"/>
+          <mesh filename="package://warthog_arm/meshes/id_1.dae"/>
         </geometry>
       </collision>
       <inertial>
@@ -51,13 +51,13 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/id_2.dae"/>
+          <mesh filename="package://warthog_arm/meshes/id_2.dae"/>
         </geometry>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/id_2.dae"/>
+          <mesh filename="package://warthog_arm/meshes/id_2.dae"/>
         </geometry>
       </collision>
       <inertial>
@@ -78,13 +78,13 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/id_3.dae"/>
+          <mesh filename="package://warthog_arm/meshes/id_3.dae"/>
         </geometry>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/id_3.dae"/>
+          <mesh filename="package://warthog_arm/meshes/id_3.dae"/>
         </geometry>
       </collision>
       <inertial>
@@ -105,13 +105,13 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/id_4.dae"/>
+          <mesh filename="package://warthog_arm/meshes/id_4.dae"/>
         </geometry>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/id_4.dae"/>
+          <mesh filename="package://warthog_arm/meshes/id_4.dae"/>
         </geometry>
       </collision>
       <inertial>
@@ -134,13 +134,13 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/id_5.dae"/>
+          <mesh filename="package://warthog_arm/meshes/id_5.dae"/>
         </geometry>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/id_5.dae"/>
+          <mesh filename="package://warthog_arm/meshes/id_5.dae"/>
         </geometry>
       </collision>
       <inertial>
@@ -163,13 +163,13 @@
       <visual>
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/id_6.dae"/>
+          <mesh filename="package://warthog_arm/meshes/id_6.dae"/>
         </geometry>
       </visual>
       <collision>
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://manipulator_warthog/meshes/id_6.dae"/>
+          <mesh filename="package://warthog_arm/meshes/id_6.dae"/>
         </geometry>
       </collision>
       <inertial>

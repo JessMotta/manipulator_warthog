@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+  <robot name="hokuyo" xmlns:xacro="http://ros.org/wiki/xacro">
+    <link name="hokuyo">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://warthog_bomb_mission/meshes/hokuyo.stl"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://warthog_bomb_mission/meshes/hokuyo.stl"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <mass value="0.363"/>
+        <inertia ixx="3.788e-4" ixy="-2.991e-6" ixz="-1.214e-6" iyy="2.650e-4" iyz="2.984e-5" izz="0.00052255"/>
+      </inertial>
+    </link>
+  </robot>

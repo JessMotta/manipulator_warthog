@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+  <robot name="camera_basler" xmlns:xacro="http://ros.org/wiki/xacro">
+    <gazebo reference="virtual_camera_basler">
+      <sensor type="camera" name="camera_top_basler">
+        <update_rate>30.0</update_rate>
+        <camera name="head">
+          <horizontal_fov>1.3962634</horizontal_fov>
+          <image>
+            <width>1366</width>
+            <height>768</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.02</near>
+            <far>300</far>
+          </clip>
+        </camera>
+        <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+          <alwaysOn>true</alwaysOn>
+          <updateRate>0.0</updateRate>
+          <cameraName>camera_top_basler</cameraName>
+          <imageTopicName>image_raw</imageTopicName>
+          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+          <frameName>virtual_camera_basler</frameName>
+          <hackBaseline>0.07</hackBaseline>
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+    </gazebo>
+    
+
+    <link name="camera_basler">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://warthog_bomb_mission/meshes/camera.stl"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://warthog_bomb_mission/meshes/camera.stl"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <mass value="0.363"/>
+        <inertia ixx="3.788e-4" ixy="-2.991e-6" ixz="-1.214e-6" iyy="2.650e-4" iyz="2.984e-5" izz="0.00052255"/>
+      </inertial>
+    </link>
+
+    <link name="virtual_camera_basler"/>
+
+    <joint name="v_camera_basler" type="fixed">
+      <parent link="camera_basler"/>
+      <child link="virtual_camera_basler"/>
+      <origin rpy="0 0 -1.57" xyz="0.0 -0.075 0"/>
+    </joint>
+
+  </robot>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <arg name="db" default="false" />
+  <arg name="db_path" default="$(find warthog_arm_moveit_config)/default_warehouse_mongo_db" />
+  <arg name="debug" default="false" />
+  <arg name="simulation" default="false"/>
+  <!-- <remap from="joint_states" to="joint_states"/> -->
+
+  <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+  <include file="$(find warthog_arm_moveit_config)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="true"/>
+  </include>
+
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" /> -->
+
+  <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
+  <include file="$(find warthog_arm_moveit_config)/launch/move_group.launch">
+    <!-- <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/> -->
+  </include>
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <include file="$(find warthog_arm_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="rviz_config" value="$(find warthog_arm)/config/config.rviz"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+  <!-- If database loading was enabled, start mongodb as well -->
+  <!-- <include file="$(find warthog_arm_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)">
+    <arg name="moveit_warehouse_database_path" value="$(arg db_path)"/>
+  </include> -->
+
+</launch>
