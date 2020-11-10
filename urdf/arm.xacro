@@ -1,0 +1,240 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="timon">
+
+    <link name="base_to_manipulator">
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/base.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/base.dae"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <mass value="10000.86661792"/>
+        <inertia ixx="8.72078676" ixy="-9.55785583e-7" ixz="0" iyx="-9.55785583e-7" iyy="4.66430350" iyz="0" izx="0" izy="-0" izz="5.35109282"/>
+      </inertial>
+    </link>
+
+    <link name="manip_link0">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/id_1.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/id_1.dae"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0 "/>
+        <mass value="3.72486532"/>
+        <inertia ixx="0.011"  ixy="-9.466e-9"  ixz="-0.00000563" iyy="0.04868026" iyz="0" izz="0.05388592" />
+      </inertial>
+    </link>
+     <joint name ="base_to_link0" type="fixed">
+        <origin rpy="0 0 3.14" xyz="0 0 0"/>
+        <parent link="base_to_manipulator"/>
+        <child link = "manip_link0"/>
+      </joint>
+
+
+    <link name="manip_link1">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/id_2.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/id_2.dae"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0 "/>
+        <mass value="1.00643107"/>
+        <inertia ixx="0.00055282"  ixy="0"  ixz="-0.00005159" iyy="0.00152712" iyz="0.00000e+0" izz="0.00141817" />   
+      </inertial>
+    </link>
+    <joint name="id_1" type="revolute">
+      <origin rpy="0 0 0" xyz="0 0 0.12715351"/>
+      <parent link="manip_link0"/>
+      <child link="manip_link1"/>
+      <axis xyz="0 0 1" rpy="0 0 0"/>
+      <limit effort="1000.0" lower="-0.8" upper="0.8" velocity="0.5"/> <!--  -0.783    0.783-->
+    </joint>
+ 
+    <link name="manip_link2">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/id_3.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/id_3.dae"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0 "/>
+        <mass value="1.96131158"/>
+        <inertia ixx="0.0593682"  ixy="0.00019981"  ixz="0.0024082" iyy="0.06052018" iyz="-0.00320203" izz="0.00314458" />  
+      </inertial>
+    </link>
+    <joint name="id_2" type="revolute">
+      <origin rpy="0 0 0" xyz="0.01099894 0 0.03900000"/>
+      <parent link="manip_link1"/>
+      <child link="manip_link2"/>
+      <axis xyz="1 0 0" rpy="0 0 0"/>
+      <limit effort="1000.0" lower="-1.5708" upper="1.5708" velocity="0.5"/> <!-- -1.5708   1.5708-->
+    </joint>
+
+    <link name="manip_link3">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/id_4.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/id_4.dae"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1.96131158"/>
+        <inertia ixx="0.0593682"  ixy="0.00019981"  ixz="0.0024082" iyy="0.06052018" iyz="-0.00320203" izz="0.00314458" /> 
+      </inertial>
+    </link>
+    <joint name="id_3" type="revolute">
+      <origin rpy="0 0.0 0.0" xyz="-0.00872107 -0.02468844 0.46468251"/>
+      <parent link="manip_link2"/>
+      <child link="manip_link3"/>
+      <axis xyz="1 0 0" rpy="0 0 0"/>
+      <limit effort="1000.0" lower="-0.74" upper="3.03" velocity="0.5"/>  <!-- -0.74    3.03-->
+    </joint>
+
+
+
+    <link name="manip_link4">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/id_5.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/id_5.dae"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0 "/>
+        <mass value="0.37561629"/>
+        <inertia ixx="0.00025385"  ixy="0"  ixz="0" iyy="0.00011288" iyz="0.00000228" izz="0.00025011" /> 
+      </inertial>
+    </link>
+    <joint name="id_4" type="revolute">
+      <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.974" soft_upper_limit="2.974"/>
+      <origin rpy="0 0 0" xyz="0.00025000 0.02278775 0.44101451"/>
+      <parent link="manip_link3"/>
+      <child link="manip_link4"/>
+      <axis xyz="0 0 -1"/>
+      <limit effort="1000.0" lower="-2.974" upper="2.974" velocity="0.5"/>  
+    </joint>
+
+
+    <link name="manip_link5">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/id_6.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://manipulator_warthog/meshes/id_6.dae"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0 "/>
+        <mass value="0.08694786"/>
+        <inertia ixx="0.00012963"  ixy="0"  ixz="0" iyy="0.00012601" iyz="-0.00000408" izz="0.00003715" />
+      </inertial>
+    </link>
+    <joint name="id_5" type="revolute">
+      <origin rpy="0 0 0" xyz="0 0 0.02699559"/>
+      <parent link="manip_link4"/>
+      <child link="manip_link5"/>
+      <axis xyz="0 1 0" rpy="0 0 0"/>
+      <limit effort="1000.0" lower="-1.5708" upper="1.5708" velocity="0.5"/> <!-- -1.5708     1.5708  -->
+    </joint>
+
+    <transmission name="trans_timon_joint1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="id_1">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="timon_joint1_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_timon_joint2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="id_2">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="timon_joint2_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_timon_joint3">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="id_3">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="timon_joint3_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_timon_joint4">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="id_4">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="timon_joint4_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_timon_joint5">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="id_5">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="timon_joint5_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    
+</robot>
