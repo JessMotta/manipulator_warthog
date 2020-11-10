@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="timon">
+  <xacro:include filename="$(find manipulator_warthog)/urdf/arm.xacro" />
+  <xacro:include filename="$(find warthog_bomb_mission)/urdf/main.urdf.xacro"/>
+
+      
+<joint name="base_to_warthog" type="fixed">
+    <origin rpy="0 0 -1.571" xyz="0.619 0 0.333"/>
+    <parent link="base_link"/>
+    <child link="base_to_manipulator"/>
+</joint>
+
+</robot>
